@@ -1,5 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Page, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'Page.create' do
+    let(:folder) { create(:folder) }
+
+    context 'valid params' do
+      it 'is true' do
+        page = Page.new(folder_id: folder.id)
+
+        expect(page.save).to be true
+      end
+    end
+  end
 end
