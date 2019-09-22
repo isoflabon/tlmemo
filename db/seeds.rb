@@ -14,11 +14,19 @@ puts '## Create User'
   User.create!(email: "#{user_domain}@example.com", password: "#{user_domain}pass", password_confirmation: "#{user_domain}pass")
 end
 
-puts '## Create Folder'
+puts '## Create Folder & Page'
 
 3.times do |i|
   name = "folder#{i}"
-  User.first.folders.create!(name: name)
+  folder = User.first.folders.create!(name: name)
+  folder.pages.create!
+end
+
+puts '## Create Card'
+
+3.times do |i|
+  content = "card#{i}"
+  Page.first.cards.create!(content: content)
 end
 
 puts 'end'
