@@ -10,8 +10,27 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <a class="navbar-brand">TLMemo</a>
+      <div>
+        <% if current_user %>
+          <%= link_to('ログアウト', destroy_user_session_path, method: :delete) %>
+        <% else %>
+          <%= link_to('ログイン', new_user_session_path, class: 'mr-sm-2') %>
+          <%= link_to('新規登録', new_user_registration_path, class: 'mr-sm-2') %>
+        <% end %>
+      </div>
+    </nav>
+    <% flash.each do |message_type, message| %>
+      <% next if message.blank? %>
+      <!-- notice, alertが存在しないためinfo, dangerに置き換える-->
+      <% message_type = 'info' if message_type == 'notice'%>
+      <% message_type = 'danger' if message_type == 'alert'%>
+      <div class="alert alert-dismissible alert-<%= message_type %>">
+        <%= message.to_s.html_safe %>
+      </div>
+    <% end %>
+
+  <%= yield %>
   </body>
 </html>
